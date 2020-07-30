@@ -28,7 +28,7 @@ import com.mauriciosc.core.schema.ResponseSchemaMockWrapper.ResponseSchemaMock;
 
 
 /**
- * Test the entire process to generate a token given the schema configuration.
+ * Suite for testing the entire process to generate a token given the schema configuration.
  * 
  * @author Mauricio Souza Couto
  * @since 2020-07-30
