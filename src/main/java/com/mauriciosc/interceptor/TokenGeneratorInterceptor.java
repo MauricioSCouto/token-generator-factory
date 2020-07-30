@@ -29,13 +29,13 @@ public class TokenGeneratorInterceptor implements HandlerInterceptor {
 	private TokenModelResponse tokenModelResponse;
 	
 	@Autowired
-	private TokenGenerationDataProvider authenticationDataprovider;
+	private TokenGenerationDataProvider tokenGenerationDataProvider;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		
-		ResponseSchema responseSchema = authenticationDataprovider.authenticate(tokenGenerationSchema);
+		ResponseSchema responseSchema = tokenGenerationDataProvider.authenticate(tokenGenerationSchema);
 		tokenModelResponse.setResponse(responseSchema);
 		
 		return true;

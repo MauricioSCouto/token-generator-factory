@@ -46,13 +46,13 @@ public class TokenGenerationDataProvider {
 	@Autowired
 	private RestTemplate restTemplate;
 
-	@Value("${authentication.url:@null}")
-	private String authenticationUrl;
+	@Value("${token.generation.url:@null}")
+	private String tokenGenerationUrl;
 	
 	/**
-	 * Creates and executes the authentication call based on the given schema.
+	 * Creates and executes the token generation call based on the given schema.
 	 * 
-	 * @param authenticationSchema - schema of the request/response call.
+	 * @param tokenGenerationSchema - schema of the request/response call.
 	 * 
 	 * @throws TokenGenerationHeaderManipulationException exception thrown in case of
 	 *                                                   failure when manipulating
@@ -65,26 +65,26 @@ public class TokenGenerationDataProvider {
 	 *                                                   the response body into the
 	 *                                                   response schema.
 	 */
-	public ResponseSchema authenticate(TokenGenerationSchema authenticationSchema) 
+	public ResponseSchema authenticate(TokenGenerationSchema tokenGenerationSchema) 
 			throws TokenGenerationHeaderManipulationException, UrlNotProvidedException, ResponseSchemaMappingException {	
 		
 		this.validateUrl();
 		
 		ObjectMapper objectMapper = new ObjectMapper();
 		
-		MultiValueMap<String, String> headers = this.createHeaders(authenticationSchema.getHeaderSchema());
+		MultiValueMap<String, String> headers = this.createHeaders(tokenGenerationSchema.getHeaderModelRequest());
 		
 		HttpEntity<TokenModelRequest> httpEntity = 
-				new HttpEntity<>(authenticationSchema.getRequestSchema(), headers);
+				new HttpEntity<>(tokenGenerationSchema.getTokenModelRequest(), headers);
 		
 		ResponseEntity<String> responseEntity = 
-				restTemplate.exchange(authenticationUrl, 
+				restTemplate.exchange(tokenGenerationUrl, 
 										HttpMethod.POST,
 										httpEntity, 
 										new ParameterizedTypeReference<String>() {});
 		
 		try {
-			return objectMapper.readValue(responseEntity.getBody(), authenticationSchema.getResponseSchema());			
+			return objectMapper.readValue(responseEntity.getBody(), tokenGenerationSchema.getResponseSchema());			
 		}
 		catch(Exception e) {
 			LOGGER.error(FALHA_DESSERIALIZACAO_RESPONSE, e);
@@ -99,7 +99,7 @@ public class TokenGenerationDataProvider {
 	 *                                 black (filled with spaces).
 	 */
 	private void validateUrl() throws UrlNotProvidedException {
-		if(StringUtils.isBlank(this.authenticationUrl)) {
+		if(StringUtils.isBlank(this.tokenGenerationUrl)) {
 			LOGGER.error(URL_NOT_PROVIDED);
 			throw new UrlNotProvidedException(URL_NOT_PROVIDED);
 		}	
