@@ -8,8 +8,8 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.mauriciosc.core.interceptor.TokenGeneratorInterceptor;
 import com.mauriciosc.core.model.response.TokenModelResponse;
+import com.mauriciosc.interceptor.TokenGeneratorInterceptor;
 
 /**
  * Defines the configurations of beans that are related to the token generation

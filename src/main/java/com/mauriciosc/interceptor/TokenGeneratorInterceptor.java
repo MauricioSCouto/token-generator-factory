@@ -1,4 +1,4 @@
-package com.mauriciosc.core.interceptor;
+package com.mauriciosc.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
