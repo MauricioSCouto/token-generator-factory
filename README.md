@@ -1,7 +1,7 @@
 # Token Generator Factory
 
 ### Description
-This dependecy is designed to work as a component that should used for dymanic token generation.
+This dependency is designed to work as a component that should used for dynamic token generation.
 
 Providing a structure that allows the implementation of the request and response contracts (schema), it fits perfectly when applications need to create tokens from different external APIs (e.g. let`s suppose you have a microservice architecture and many need to generate a token. Your microservices will need to expose the request data and response schema and do not concern about the communication).
 
@@ -15,7 +15,7 @@ Below follow the technologies that were used to develop this dependency:
 * BDDMockito/Mockito (test).
 
 ### Usage
-The current version requires the applications importing this depedency to implement a *TokenGenerationSchema* bean as its configuration. This is necessary to provide the schemas and data required to create token generation calls.
+The current version requires the applications importing this dependency to implement a *TokenGenerationSchema* bean as its configuration. This is necessary to provide the schemas and data required to create token generation calls.
 
 The *TokenGenerationSchema* is composed of three pieces:
 
@@ -25,7 +25,7 @@ The *TokenGenerationSchema* is composed of three pieces:
 
 * *ResponseSchema* - this interface represents the response body _schema_. This class will be populated with the response of the token generation call. *The implementation of this interface is _mandatory_ as long as the call is expected to create a response (token or something like)*.
 
-*Important*: the *TokenGenerationSchema* needs an *instance* of both *HeaderModelRequest* and *TokenModelRequest*. The third component (*ResponseSchema*)  should be indicated as a *class* because only the response definition is necessary on the depedency setup.
+*Important*: the *TokenGenerationSchema* needs an *instance* of both *HeaderModelRequest* and *TokenModelRequest*. The third component (*ResponseSchema*)  should be indicated as a *class* because only the response definition is necessary on the dependency setup.
 
 ***
 
