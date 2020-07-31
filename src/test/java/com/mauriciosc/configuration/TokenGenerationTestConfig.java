@@ -49,10 +49,10 @@ public class TokenGenerationTestConfig {
 	@Bean
 	@Primary
 	public TokenGenerationSchema getTokenGenerationSchema() {
-		TokenGenerationSchema tokenGenerationSchema = new TokenGenerationSchema();
-		tokenGenerationSchema.setHeaderModelRequest(new HeaderModelRequestMock("headerA", 1));
-		tokenGenerationSchema.setTokenModelRequest(new TokenModelRequestMock("campoA", 2, "campoC"));
-		tokenGenerationSchema.setResponseSchema(ResponseSchemaMock.class);
+		TokenGenerationSchema tokenGenerationSchema = new TokenGenerationSchema(
+						new HeaderModelRequestMock("headerA", 1), 
+						new TokenModelRequestMock("campoA", 2, "campoC"), 
+						ResponseSchemaMock.class);
 		
 		return tokenGenerationSchema;
 	}
