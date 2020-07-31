@@ -32,7 +32,7 @@ import com.mauriciosc.core.model.request.HeaderModelRequestMock;
 import com.mauriciosc.core.model.request.TokenModelRequest;
 import com.mauriciosc.core.model.request.TokenModelRequestMock;
 import com.mauriciosc.core.schema.ResponseSchema;
-import com.mauriciosc.core.schema.ResponseSchemaMockWrapper.ResponseSchemaMock;
+import com.mauriciosc.core.schema.ResponseSchemaMock;
 import com.mauriciosc.core.schema.TokenGenerationSchema;
 
 /**

@@ -24,7 +24,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.mauriciosc.configuration.TokenGenerationTestConfig;
 import com.mauriciosc.core.model.response.TokenModelResponse;
-import com.mauriciosc.core.schema.ResponseSchemaMockWrapper.ResponseSchemaMock;
+import com.mauriciosc.core.schema.ResponseSchemaMock;
 
 
 /**

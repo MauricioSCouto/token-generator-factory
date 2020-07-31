@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 import com.mauriciosc.core.model.request.HeaderModelRequestMock;
 import com.mauriciosc.core.model.request.TokenModelRequestMock;
 import com.mauriciosc.core.model.response.TokenModelResponse;
-import com.mauriciosc.core.schema.ResponseSchemaMockWrapper.ResponseSchemaMock;
+import com.mauriciosc.core.schema.ResponseSchemaMock;
 import com.mauriciosc.core.schema.TokenGenerationSchema;
 
 /**
