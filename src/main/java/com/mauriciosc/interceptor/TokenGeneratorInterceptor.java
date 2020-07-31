@@ -35,7 +35,7 @@ public class TokenGeneratorInterceptor implements HandlerInterceptor {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		
-		ResponseSchema responseSchema = tokenGenerationDataProvider.authenticate(tokenGenerationSchema);
+		ResponseSchema responseSchema = tokenGenerationDataProvider.createToken(tokenGenerationSchema);
 		tokenModelResponse.setResponse(responseSchema);
 		
 		return true;

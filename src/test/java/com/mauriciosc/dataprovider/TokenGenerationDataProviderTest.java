@@ -27,7 +27,6 @@ import org.springframework.web.client.RestTemplate;
 import com.mauriciosc.core.exception.ResponseSchemaMappingException;
 import com.mauriciosc.core.exception.TokenGenerationHeaderManipulationException;
 import com.mauriciosc.core.exception.UrlNotProvidedException;
-import com.mauriciosc.core.model.request.HeaderModelRequest;
 import com.mauriciosc.core.model.request.HeaderModelRequestMock;
 import com.mauriciosc.core.model.request.TokenModelRequest;
 import com.mauriciosc.core.model.request.TokenModelRequestMock;
@@ -79,8 +78,10 @@ public class TokenGenerationDataProviderTest {
 	 */
 	@SuppressWarnings("unchecked")
 	@Test
-	public void testAuthenticate() throws TokenGenerationHeaderManipulationException, UrlNotProvidedException, ResponseSchemaMappingException {
-		TokenGenerationSchema tokenGenerationSchema = new TokenGenerationSchema(this.getHeadersMock(), this.getRequestMock(), ResponseSchemaMock.class);
+	public void testCreateToken() throws TokenGenerationHeaderManipulationException, UrlNotProvidedException, ResponseSchemaMappingException {
+		TokenGenerationSchema tokenGenerationSchema = 
+				new TokenGenerationSchema(
+						new HeaderModelRequestMock("x-header-mock", 2), new TokenModelRequestMock("mock-login", 1, "mock-senha"), ResponseSchemaMock.class);
 		
 		HeaderModelRequestMock headersSchemaMock = (HeaderModelRequestMock) tokenGenerationSchema.getHeaderModelRequest();
 		TokenModelRequestMock requestSchemaMock = (TokenModelRequestMock) tokenGenerationSchema.getTokenModelRequest();
@@ -101,7 +102,7 @@ public class TokenGenerationDataProviderTest {
 				Mockito.any(ParameterizedTypeReference.class)))
 		.thenReturn(responseEntity);
 		
-		ResponseSchemaMock responseSchema = (ResponseSchemaMock) tokenGenerationDataProvider.authenticate(tokenGenerationSchema);
+		ResponseSchemaMock responseSchema = (ResponseSchemaMock) tokenGenerationDataProvider.createToken(tokenGenerationSchema);
 		
 		// validating request headers
 		assertEquals("x-header-mock", headersSchemaMock.getHeaderA());
@@ -140,9 +141,9 @@ public class TokenGenerationDataProviderTest {
 	 */
 	@SuppressWarnings("unchecked")
 	@Test
-	public void testAuthenticateNullUrl() throws TokenGenerationHeaderManipulationException, UrlNotProvidedException {
+	public void testCreateTokenNullUrl() throws TokenGenerationHeaderManipulationException, UrlNotProvidedException {
 		ReflectionTestUtils.setField(tokenGenerationDataProvider, "tokenGenerationUrl", null);
-		TokenGenerationSchema tokenGenerationSchema = new TokenGenerationSchema(this.getHeadersMock(), this.getRequestMock(), ResponseSchemaMock.class);
+		TokenGenerationSchema tokenGenerationSchema = new TokenGenerationSchema(new HeaderModelRequestMock("x-header-mock", 2), new TokenModelRequestMock("mock-login", 1, "mock-senha"), ResponseSchemaMock.class);
 		
 		HeaderModelRequestMock headersSchemaMock = (HeaderModelRequestMock) tokenGenerationSchema.getHeaderModelRequest();
 		
@@ -161,7 +162,7 @@ public class TokenGenerationDataProviderTest {
 		.thenCallRealMethod();
 		
 		// validating exception when request url is not provided
-		assertThrows(UrlNotProvidedException.class, () -> tokenGenerationDataProvider.authenticate(tokenGenerationSchema));
+		assertThrows(UrlNotProvidedException.class, () -> tokenGenerationDataProvider.createToken(tokenGenerationSchema));
 		
 		// validating client call is not executed
 		verify(restTemplate, never())
@@ -190,9 +191,9 @@ public class TokenGenerationDataProviderTest {
 	 */
 	@SuppressWarnings("unchecked")
 	@Test
-	public void testAuthenticateNullHeader() throws TokenGenerationHeaderManipulationException, UrlNotProvidedException, ResponseSchemaMappingException {
+	public void testCreateTokenNullHeader() throws TokenGenerationHeaderManipulationException, UrlNotProvidedException, ResponseSchemaMappingException {
 		ReflectionTestUtils.setField(tokenGenerationDataProvider, "tokenGenerationUrl", MOCK_URL);
-		TokenGenerationSchema tokenGenerationSchema = new TokenGenerationSchema(null, this.getRequestMock(), ResponseSchemaMock.class);
+		TokenGenerationSchema tokenGenerationSchema = new TokenGenerationSchema(null, new TokenModelRequestMock("mock-login", 1, "mock-senha"), ResponseSchemaMock.class);
 
 		HeaderModelRequestMock headersSchemaMock = (HeaderModelRequestMock) tokenGenerationSchema.getHeaderModelRequest();
 		TokenModelRequestMock requestSchemaMock = (TokenModelRequestMock) tokenGenerationSchema.getTokenModelRequest();
@@ -209,7 +210,7 @@ public class TokenGenerationDataProviderTest {
 				Mockito.any(ParameterizedTypeReference.class)))
 		.thenReturn(responseEntity);
 		
-		ResponseSchemaMock responseSchema = (ResponseSchemaMock) tokenGenerationDataProvider.authenticate(tokenGenerationSchema);
+		ResponseSchemaMock responseSchema = (ResponseSchemaMock) tokenGenerationDataProvider.createToken(tokenGenerationSchema);
 		
 		// validating null request headers
 		assertNull(headersSchemaMock);		
@@ -248,9 +249,9 @@ public class TokenGenerationDataProviderTest {
 	 */
 	@SuppressWarnings("unchecked")
 	@Test
-	public void testAuthenticateNullRequest() throws TokenGenerationHeaderManipulationException, UrlNotProvidedException, ResponseSchemaMappingException {
+	public void testCreateTokenNullRequest() throws TokenGenerationHeaderManipulationException, UrlNotProvidedException, ResponseSchemaMappingException {
 		ReflectionTestUtils.setField(tokenGenerationDataProvider, "tokenGenerationUrl", MOCK_URL);
-		TokenGenerationSchema tokenGenerationSchema = new TokenGenerationSchema(this.getHeadersMock(), null, ResponseSchemaMock.class);
+		TokenGenerationSchema tokenGenerationSchema = new TokenGenerationSchema(new HeaderModelRequestMock("x-header-mock", 2), null, ResponseSchemaMock.class);
 		
 		HeaderModelRequestMock headersSchemaMock = (HeaderModelRequestMock) tokenGenerationSchema.getHeaderModelRequest();
 		TokenModelRequestMock requestSchemaMock = (TokenModelRequestMock) tokenGenerationSchema.getTokenModelRequest();
@@ -271,7 +272,7 @@ public class TokenGenerationDataProviderTest {
 				Mockito.any(ParameterizedTypeReference.class)))
 		.thenReturn(responseEntity);
 		
-		ResponseSchemaMock responseSchema = (ResponseSchemaMock) tokenGenerationDataProvider.authenticate(tokenGenerationSchema);
+		ResponseSchemaMock responseSchema = (ResponseSchemaMock) tokenGenerationDataProvider.createToken(tokenGenerationSchema);
 		
 		// validating request headers
 		assertEquals("x-header-mock", headersSchemaMock.getHeaderA());
@@ -308,9 +309,9 @@ public class TokenGenerationDataProviderTest {
 	 */
 	@SuppressWarnings("unchecked")
 	@Test
-	public void testAuthenticateNullResponse() throws TokenGenerationHeaderManipulationException, UrlNotProvidedException, ResponseSchemaMappingException {
+	public void testCreateTokenNullResponse() throws TokenGenerationHeaderManipulationException, UrlNotProvidedException, ResponseSchemaMappingException {
 		ReflectionTestUtils.setField(tokenGenerationDataProvider, "tokenGenerationUrl", MOCK_URL);
-		TokenGenerationSchema tokenGenerationSchema = new TokenGenerationSchema(this.getHeadersMock(), this.getRequestMock(), null);
+		TokenGenerationSchema tokenGenerationSchema = new TokenGenerationSchema(new HeaderModelRequestMock("x-header-mock", 2), new TokenModelRequestMock("mock-login", 1, "mock-senha"), null);
 		
 		HeaderModelRequestMock headersSchemaMock = (HeaderModelRequestMock) tokenGenerationSchema.getHeaderModelRequest();
 		TokenModelRequestMock requestSchemaMock = (TokenModelRequestMock) tokenGenerationSchema.getTokenModelRequest();
@@ -332,7 +333,7 @@ public class TokenGenerationDataProviderTest {
 		.thenReturn(responseEntity);
 		
 		// validating exception when response schema is not provided
-		assertThrows(ResponseSchemaMappingException.class, () -> tokenGenerationDataProvider.authenticate(tokenGenerationSchema));
+		assertThrows(ResponseSchemaMappingException.class, () -> tokenGenerationDataProvider.createToken(tokenGenerationSchema));
 	
 		// validating request headers
 		assertEquals("x-header-mock", headersSchemaMock.getHeaderA());
@@ -358,23 +359,5 @@ public class TokenGenerationDataProviderTest {
 	 */
 	private String getResponseMock() {
 		return "{\"token\": \"mock_token_retorno\"}";
-	}
-
-	/**
-	 * Creates an instance mock of the {@link TokenModelRequest} class.
-	 * 
-	 * @return {@code ResponseSchema} - object mock.
-	 */
-	private TokenModelRequest getRequestMock() {
-		return new TokenModelRequestMock("mock-login", 1, "mock-senha");
-	}
-
-	/**
-	 * Creates an instance mock of the {@link HeaderModelRequest} class.
-	 * 
-	 * @return {@code HeaderSchema} - object mock.
-	 */
-	private HeaderModelRequest getHeadersMock() {
-		return new HeaderModelRequestMock("x-header-mock", 2);
 	}
 }

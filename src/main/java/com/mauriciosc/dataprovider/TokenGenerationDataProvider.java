@@ -65,7 +65,7 @@ public class TokenGenerationDataProvider {
 	 *                                                   the response body into the
 	 *                                                   response schema.
 	 */
-	public ResponseSchema authenticate(TokenGenerationSchema tokenGenerationSchema) 
+	public ResponseSchema createToken(TokenGenerationSchema tokenGenerationSchema) 
 			throws TokenGenerationHeaderManipulationException, UrlNotProvidedException, ResponseSchemaMappingException {	
 		
 		this.validateUrl();
