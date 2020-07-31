@@ -60,8 +60,8 @@ This dependency`s version is a MVP of the concept trying to be applied and lacks
 Below follow the features/improvements that may be implemented in next releases:
 
 * configuration flexibility
-** different method calls (e.g. GET)
-** multiple request/response format (e.g. XML)
+  * different method calls (e.g. GET)
+  * multiple request/response format (e.g. XML)
 
 * token caching
 * multiple token generation call
