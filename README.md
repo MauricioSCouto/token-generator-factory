@@ -3,7 +3,7 @@
 ### Description
 This dependecy is designed to work as a component that should used for dymanic token generation.
 
-Providing a structure that allows the implementation of the request and response contracts (schema), it fits perfectly when applications need to create tokens from different external APIs (e.g. let`s suppose you have a microservice architecture and several of your microservices need to generate a token when call a third-part API. Your microservices will need to expose the request data and response schema and do not concern about the communication).
+Providing a structure that allows the implementation of the request and response contracts (schema), it fits perfectly when applications need to create tokens from different external APIs (e.g. let`s suppose you have a microservice architecture and many need to generate a token. Your microservices will need to expose the request data and response schema and do not concern about the communication).
 
 ### Technologies
 Below follow the technologies that were used to develop this dependency:
